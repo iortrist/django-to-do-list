@@ -1,0 +1,50 @@
+{% extends 'base/main.html' %}
+{% block content %}
+  <div class="cotainer mt-5 mx-5">
+    <div class="row">
+      <!--Form-->
+      <div class="col mb-1">
+        <div class="card">
+          <h5 class="card-header text-center">To Do List</h5>
+          <div class="card-body">            
+            <!--Add To Do Item-->
+            <form action="" method="POST" class="mb-2">
+              {% csrf_token %}
+              <div class="form-floating mb-3">
+                <textarea class="form-control" placeholder="Add your to do item here" name="item" id="item" required></textarea>
+                <label for="item">Add your to do item here</label>
+              </div>
+              <input type="submit" class="btn btn-primary" value="Add Item">
+            </form>  
+            {% for message in messages %}
+              <p class="card-text text-success">{{message}}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <!--Task View-->
+      <div class="col-md-8">
+        <div class="card">
+          <h5 class="card-header text-center">Active Tasks</h5>
+          <div class="card-body">            
+            <ul class="list-group list-group-flush">
+              {% for item in items %}                                  
+                <li class="list-group-item mb-3">
+                  <h5 class="card-title mb-3">{{ item }}</h5>
+                  <a href="{% url 'edit-item' item.id%}" class="text-decoration-none"><small>Edit</small></a>
+                  <a href="{% url 'remove-item' item.id%}" class="text-decoration-none"><small>Remove</small></a>
+                  <div class="card-text text-muted">
+                    <small>{{item.updated}}</small>
+                  </div>
+                </li>
+              {% empty %}
+                <p class="card-text">No active task</p>                     
+              {% endfor %}
+            </ul>  
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+  
+{% endblock  %}
