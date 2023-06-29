@@ -2,6 +2,8 @@
 # exit on error
 set -o errexit
 
+pip install django
+
 pip freeze > requirements.txt
 
 pip install -r requirements.txt
